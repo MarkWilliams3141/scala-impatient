@@ -1,3 +1,5 @@
+import java.time.LocalDate
+
 object Chapter02 {
 
   //  1. The signum of a number is 1 if the number is positive, –1 if it is negative, and 0 if it is zero.
@@ -55,15 +57,28 @@ object Chapter02 {
   def product(s : String): Long = s.map(_.toLong).product
 
   // 9. Make the function of the preceding exercise a recursive function.
+  def recursiveProduct(s: String): Long = {
+    if (s.length == 1) s.head
+    else recursiveProduct(s.tail) * s.head
+  }
 
-  //  10. Write a function that computes xn, where n is an integer. Use the following recursive
+  //  10. Write a function that computes x^n, where n is an integer. Use the following recursive
   //    definition:
-  //  • xn = y · y if n is even and positive, where y = xn / 2.
-  //  • xn = x · xn – 1 if n is odd and positive.
-  //  • x0 = 1.
-  //  • xn = 1 / x–n if n is negative.
+  //  • x^n = y · y if n is even and positive, where y = x^(n / 2). +++
+  //  • x^n = x · x^n – 1 if n is odd and positive.
+  //  • x^0 = 1.
+  //  • x^n = 1 / x–n if n is negative.
   //    Don’t use a return statement.
 
+  def power(x: Int, n: Int): Int = {
+    if( n == 0 ) { 1 }
+    else if (n < 0) 1 / power(x, -n)
+    else if (n % 2 != 0) x * power(x, n - 1)
+    else {
+      val y = power(x, (n / 2))
+      y * y
+    }
+  }
 
   //  11. Define a string interpolator date so that you can define a java.time.LocalDate as
   //    date"$year-$month-$day". You need to define an “implicit” class with a date
@@ -76,4 +91,5 @@ object Chapter02 {
   //    handling. Throw an exception if there aren’t three arguments, or if they aren’t integers, or if they
   //  aren’t separated by dashes. (You get the strings in between the expressions as sc.parts.)
 
+  //  Leaving this one for later...
 }
